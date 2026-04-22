@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RML Implementation Report</title>
+  <script class="remove" src="https://www.w3.org/Tools/respec/respec-w3c" async></script>
+  <script class="remove">
+    var respecConfig = {
+      specStatus: "unofficial",
+      shortName: "rml-implementation-report",
+      publishDate: "2026-04-21",
+      editors: [
+        {
+          name: "David Chaves-Fraga",
+          url: "https://davidchavesfraga.com",
+          company: "CiTIUS &ndash; University of Santiago de Compostela",
+          orcid: "0000-0003-3236-2789",
+          companyURL: "https://citius.gal"
+        }
+      ],
+      github: "https://github.com/kg-construct/implementation-report"
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<section id="abstract">
+  <p>
+    This document reports implementation results for the RML specification family across six modules:
+    RML-Core, RML-IO, RML-FNML, RML-CC, RML-LV, and RML-star. Results are loaded automatically from CSV files hosted in the same GitHub Pages repository.
+  </p>
+</section>
+
+<section id="sotd">
+  <p>
+    This is a living implementation report intended to be regenerated automatically from test-case and processor result CSV files, without requiring any server-side component.
+  </p>
+</section>
+
+<section id="intro">
+  <h2>Introduction</h2>
+  <p>
+    The goal of this report is to provide a lightweight, static, GitHub-friendly implementation report for the RML test suite. The report groups test cases by module and computes implementation coverage automatically in the browser.
+  </p>
+</section>
+
+<section id="modules">
+  <h2>Modules covered</h2>
+  <ul>
+    <li><strong>RML-Core</strong>: schema transformations</li>
+    <li><strong>RML-IO</strong>: source and target data</li>
+    <li><strong>RML-FNML</strong>: transformation functions</li>
+    <li><strong>RML-CC</strong>: collections &amp; containers</li>
+    <li><strong>RML-LV</strong>: views over data sources</li>
+    <li><strong>RML-star</strong>: to be adapted for RDF 1.2</li>
+  </ul>
+</section>
+
+<section id="processors">
+  <h2>Processors</h2>
+  <div id="processors-table">Loading processors…</div>
+</section>
+
+<section id="summary">
+  <h2>Coverage summary</h2>
+  <div id="summary-cards">Loading summary…</div>
+</section>
+
+<section id="filters">
+  <h2>Filters</h2>
+  <div class="filters">
+    <label>Module
+      <select id="moduleFilter"><option value="">All</option></select>
+    </label>
+    <label>Processor
+      <select id="processorFilter"><option value="">All</option></select>
+    </label>
+    <label>Status
+      <select id="statusFilter">
+        <option value="">All</option>
+        <option value="passed">passed</option>
+        <option value="failed">failed</option>
+        <option value="inapplicable">inapplicable</option>
+      </select>
+    </label>
+    <label>Search
+      <input id="searchFilter" type="text" placeholder="test case id or title" />
+    </label>
+  </div>
+</section>
+
+<section id="results">
+  <h2>Implementation test results</h2>
+  <div id="results-table">Loading results…</div>
+</section>
+
+<script src="js/app.js"></script>
+</body>
+</html>

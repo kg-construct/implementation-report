@@ -1,0 +1,15 @@
+body { font-family: system-ui, sans-serif; }
+.filters { display:flex; gap:1rem; flex-wrap:wrap; margin: 1rem 0; }
+label { display:flex; flex-direction:column; font-weight:600; gap:.3rem; }
+select, input { padding:.45rem .6rem; }
+table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.95rem; }
+th, td { border:1px solid #d9d9d9; padding:.5rem .6rem; vertical-align:top; }
+th { background:#f4f6f8; }
+.status { font-weight:700; text-transform:lowercase; }
+.status-passed { background:#1f7a1f; color:white; }
+.status-failed { background:#b42318; color:white; }
+.status-inapplicable { background:#6b7280; color:white; }
+.cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1rem; }
+.card { border:1px solid #ddd; padding:1rem; border-radius:8px; background:#fafafa; }
+.small { color:#555; font-size:.9rem; }
+code { white-space:nowrap; }
