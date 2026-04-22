@@ -186,9 +186,9 @@ function wireFilters(testcases, processors, results) {
 async function init() {
   try {
     const [processors, testcases, results] = await Promise.all([
-      fetchCsv('../resources/data/processors.csv'),
-      fetchCsv('../resources/data/testcases.csv'),
-      fetchCsv('../resources/data/results.csv')
+      fetchCsv('https://kg-construct.github.io/implementation-report/resources/data/processors.csv'),
+      fetchCsv('https://kg-construct.github.io/implementation-report/resources/data/testcases.csv'),
+      fetchCsv('https://kg-construct.github.io/implementation-report/resources/data/results.csv')
     ]);
 
     document.getElementById('processors-table').innerHTML = buildProcessorTable(processors, results);
