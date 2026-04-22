@@ -186,9 +186,9 @@ function wireFilters(testcases, processors, results) {
 async function init() {
   try {
     const [processors, testcases, results] = await Promise.all([
-      fetchCsv('data/processors.csv'),
-      fetchCsv('data/testcases.csv'),
-      fetchCsv('data/results.csv')
+      fetchCsv('../resources/data/processors.csv'),
+      fetchCsv('../resources/data/testcases.csv'),
+      fetchCsv('../resources/data/results.csv')
     ]);
 
     document.getElementById('processors-table').innerHTML = buildProcessorTable(processors, results);
