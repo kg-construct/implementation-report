@@ -1,0 +1,3 @@
+ID,title,description,specification,base_iri,mapping,input_format1,input_format2,input_format3,output_format1,output_format2,output_format3,input1,input2,input3,output1,output2,output3,error
+RMLTC0000-JSON,"""one table, one column, zero rows""","""Tests if an empty table produces an empty RDF graph""",core,http://example.com/,mapping.ttl,application/json,,,application/n-quads,,,student.json,,,output.nq,,,false
+RMLTC0001-CSV,"""one table, one column, one row""","""Tests a simple CSV source with one triple generated""",core,http://example.com/,mapping.ttl,text/csv,,,application/n-quads,,,student.csv,,,output.nq,,,false

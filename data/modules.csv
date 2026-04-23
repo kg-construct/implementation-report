@@ -1,0 +1,7 @@
+module_id,module_name,specification_slug,testcases_csv
+RML-Core,RML-Core,core,https://raw.githubusercontent.com/kg-construct/rml-core/refs/heads/main/test-cases/metadata.csv
+RML-IO,RML-IO,io,https://raw.githubusercontent.com/kg-construct/rml-io/refs/heads/main/test-cases/metadata.csv
+RML-FNML,RML-FNML,fnml,https://raw.githubusercontent.com/kg-construct/rml-fnml/refs/heads/main/test-cases/metadata.csv
+RML-CC,RML-CC,cc,https://raw.githubusercontent.com/kg-construct/rml-cc/refs/heads/main/test-cases/metadata.csv
+RML-LV,RML-LV,lv,https://raw.githubusercontent.com/kg-construct/rml-lv/refs/heads/main/test-cases/metadata.csv
+RML-star,RML-star,star,https://raw.githubusercontent.com/kg-construct/rml-star/refs/heads/main/test-cases/metadata.csv

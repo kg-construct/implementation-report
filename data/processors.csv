@@ -1,2 +1,3 @@
-processor_id,name,version,release_date,contact,homepage
-
+processor_id,name,version,release_date,contact,homepage,results_file
+engine-example,Example Engine,0.1.0,2026-04-21,team@example.org,https://example.org/engine-example,results/engine-example.csv
+engine-beta,Example Engine Beta,0.2.0,2026-04-22,beta@example.org,https://example.org/engine-beta,results/engine-beta.csv

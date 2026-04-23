@@ -1,0 +1,5 @@
+testcase_id,status,notes
+RMLTC0000-JSON,passed,Basic JSON test passes
+RMLTC0001-CSV,failed,CSV iterator still missing
+RMLFNML0001-JSON,passed,Functions support works
+RMLSTAR0001-JSON,inapplicable,RDF-star support not enabled in this build

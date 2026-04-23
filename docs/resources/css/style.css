@@ -9,7 +9,9 @@ th { background:#f4f6f8; }
 .status-passed { background:#1f7a1f; color:white; }
 .status-failed { background:#b42318; color:white; }
 .status-inapplicable { background:#6b7280; color:white; }
-.cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1rem; }
-.card { border:1px solid #ddd; padding:1rem; border-radius:8px; background:#fafafa; }
 .small { color:#555; font-size:.9rem; }
 code { white-space:nowrap; }
+.notice-box { border:1px solid #f2cc8f; background:#fff7e6; padding:1rem; border-radius:8px; }
+.notice-box ul { margin:.75rem 0 0 1.25rem; }
+.notice-box li + li { margin-top:.4rem; }
+.error-box { border:1px solid #ef4444; background:#fef2f2; padding:1rem; border-radius:8px; }

@@ -28,13 +28,13 @@
 <section id="abstract">
   <p>
     This document reports implementation results for the RML specification family across six modules:
-    RML-Core, RML-IO, RML-FNML, RML-CC, RML-LV, and RML-star. Results are loaded automatically from CSV files hosted in the same GitHub Pages repository.
+    RML-Core, RML-IO, RML-FNML, RML-CC, RML-LV, and RML-star. Engine metadata is loaded from this repository, while test-case metadata is pulled from the module repositories and engine results are loaded from one CSV file per engine.
   </p>
 </section>
 
 <section id="sotd">
   <p>
-    This is a living implementation report intended to be regenerated automatically from test-case and processor result CSV files, without requiring any server-side component.
+    This is a living implementation report intended to be regenerated automatically from module test-case inventories and per-engine result CSV files, without requiring any server-side component.
   </p>
 </section>
 
@@ -63,8 +63,13 @@
 </section>
 
 <section id="summary">
-  <h2>Coverage summary</h2>
-  <div id="summary-cards">Loading summary…</div>
+  <h2>Coverage summary by engine and module</h2>
+  <div id="summary-table">Loading summary…</div>
+</section>
+
+<section id="data-quality">
+  <h2>Data quality notices</h2>
+  <div id="data-notices" hidden></div>
 </section>
 
 <section id="filters">

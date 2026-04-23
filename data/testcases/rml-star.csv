@@ -1,0 +1,2 @@
+ID,title,description,specification,base_iri,mapping,input_format1,input_format2,input_format3,output_format1,output_format2,output_format3,input1,input2,input3,output1,output2,output3,error
+RMLSTAR0001-JSON,"""rdf-star annotations""","""Checks quoted triples and annotations""",star,http://example.com/,mapping.ttl,application/json,,,application/n-quads,,,input.json,,,output.nq,,,false

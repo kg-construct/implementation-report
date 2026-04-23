@@ -1,0 +1,2 @@
+ID,title,description,specification,base_iri,mapping,input_format1,input_format2,input_format3,output_format1,output_format2,output_format3,input1,input2,input3,output1,output2,output3,error
+RMLIO0001-XML,"""xml source document""","""Checks XML input handling with XPath references""",io,http://example.com/,mapping.ttl,application/xml,,,application/n-quads,,,input.xml,,,output.nq,,,false

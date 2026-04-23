@@ -1,0 +1,5 @@
+testcase_id,status,notes
+RMLTC0000-JSON,passed,Reference case passes
+RMLTC0001-CSV,passed,CSV input supported
+RMLIO0001-XML,failed,XML source handling still unstable
+RMLLV0001-JSON,passed,Logical views pass in the prototype
