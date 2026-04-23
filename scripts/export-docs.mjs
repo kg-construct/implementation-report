@@ -213,8 +213,8 @@ function injectSnapshot(html, snapshot) {
     .replace(/href="css\/style\.css"/g, 'href="resources/css/style.css"')
     .replace(/src="js\/app\.js"/g, 'src="resources/js/app.js"')
     .replace(
-      '</body>',
-      `  <script id="report-data" type="application/json">${json}</script>\n</body>`
+      /<script src="resources\/js\/app\.js"><\/script>/,
+      `<script id="report-data" type="application/json">${json}</script>\n<script src="resources/js/app.js"></script>`
     );
 }
 
