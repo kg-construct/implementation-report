@@ -47,7 +47,3 @@ Allowed `status` values:
 4. Open the published URL.
 
 The export script uses ReSpec's own HTML export through `npx respec`, then embeds the resolved data snapshot into `docs/index.html` so the published page does not fetch CSV files at runtime.
-
-## Suggested next step
-
-Replace the example engine CSVs with your real results. If needed, adjust `data/modules.csv` to point to different branches or repositories.
