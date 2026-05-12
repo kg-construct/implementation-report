@@ -98,6 +98,37 @@ function statusCell(status) {
   return `<span class="status status-${escapeHtml(status)}">${escapeHtml(status)}</span>`;
 }
 
+function formatModuleHeader(moduleName) {
+  if (moduleName.startsWith('RML-')) {
+    return `RML-<br>${escapeHtml(moduleName.slice(4))}`;
+  }
+  return escapeHtml(moduleName);
+}
+
+function formatEngineHeader(name) {
+  const camelSplit = name.match(/^([A-Z]?[a-z0-9]+)([A-Z].*)$/);
+  if (camelSplit) {
+    return `${escapeHtml(camelSplit[1])}<br>${escapeHtml(camelSplit[2])}`;
+  }
+
+  const hyphenIndex = name.indexOf('-');
+  if (hyphenIndex > 0) {
+    return `${escapeHtml(name.slice(0, hyphenIndex))}<br>${escapeHtml(name.slice(hyphenIndex + 1))}`;
+  }
+
+  return escapeHtml(name);
+}
+
+function resultCell(result) {
+  if (!result) return '<span class="result-cell is-empty">-</span>';
+
+  const note = (result.notes || '').trim();
+  const noteButton = note
+    ? `<button type="button" class="result-note" data-note-trigger aria-label="Show note">+</button><span class="result-popover" hidden>${escapeHtml(note)}</span>`
+    : '';
+  return `<span class="result-cell">${statusCell(result.status)}${noteButton}</span>`;
+}
+
 function normalizeSpecificationSlug(value) {
   const normalized = String(value || '').trim().toLowerCase().replace(/\/+$/, '');
   const known = {
@@ -294,13 +325,13 @@ function summarizeEngineByModule(processorId, processors, testcases, results) {
 
 function buildSummaryTable(processors, testcases, results) {
   const moduleNames = [...new Set(testcases.map(testcase => testcase.module))];
-  const header = moduleNames.map(moduleName => `<th>${escapeHtml(moduleName)}</th>`).join('');
+  const header = moduleNames.map(moduleName => `<th class="wrap-header">${formatModuleHeader(moduleName)}</th>`).join('');
 
   const rows = processors.map(processor => {
     const summary = summarizeEngineByModule(processor.processor_id, processors, testcases, results);
     const moduleCells = moduleNames.map(moduleName => {
       const item = summary.modules[moduleName];
-      return `<td>${item.covered}/${item.total}<div class="small">P ${item.passed} · F ${item.failed} · I ${item.inapplicable}</div></td>`;
+      return `<td>${item.passed}/${item.total}<div class="small">F ${item.failed} · <span class="summary-tail">I ${item.inapplicable}</span></div></td>`;
     }).join('');
 
     return `<tr>
@@ -317,71 +348,91 @@ function buildSummaryTable(processors, testcases, results) {
     return '<p class="small">No engines found in <code>data/processors.csv</code>.</p>';
   }
 
-  return `<table><thead><tr><th>Engine</th><th>Reported</th><th>Passed</th><th>Failed</th><th>Inapplicable</th>${header}</tr></thead><tbody>${rows}</tbody></table>`;
+  return `<table class="summary-table"><thead><tr><th>Engine</th><th class="summary-metric">Reported</th><th class="summary-metric">Passed</th><th class="summary-metric">Failed</th><th class="summary-metric">Inappl.</th>${header}</tr></thead><tbody>${rows}</tbody></table>`;
 }
 
-function buildResultsTable(testcases, processors, results, filters) {
-  const processorMap = Object.fromEntries(processors.map(processor => [processor.processor_id, processor]));
-  const testcaseMap = Object.fromEntries(testcases.map(testcase => [testcase.testcase_id, testcase]));
+function buildResultsTable(moduleName, testcases, processors, results) {
+  const moduleTestcases = testcases
+    .filter(testcase => testcase.module === moduleName)
+    .sort((a, b) => a.testcase_id.localeCompare(b.testcase_id));
+  const resultMap = new Map(
+    results.map(result => [`${result.testcase_id}::${result.processor_id}`, result])
+  );
 
-  const filtered = results.filter(result => {
-    const testcase = testcaseMap[result.testcase_id];
-    if (!testcase) return false;
-    if (filters.module && testcase.module !== filters.module) return false;
-    if (filters.processor && result.processor_id !== filters.processor) return false;
-    if (filters.status && result.status !== filters.status) return false;
-    if (filters.search) {
-      const query = filters.search.toLowerCase();
-      const haystack = `${result.testcase_id} ${testcase.title} ${testcase.module} ${result.notes || ''}`.toLowerCase();
-      if (!haystack.includes(query)) return false;
-    }
-    return true;
-  }).sort((a, b) => a.testcase_id.localeCompare(b.testcase_id) || a.processor_id.localeCompare(b.processor_id));
+  const headerCells = processors
+    .map(processor => `<th class="wrap-header">${formatEngineHeader(processor.name)}</th>`)
+    .join('');
 
-  const rows = filtered.map(result => {
-    const testcase = testcaseMap[result.testcase_id];
-    const processor = processorMap[result.processor_id];
+  const rows = moduleTestcases.map(testcase => {
     const testcaseLabel = testcase.link
-      ? `<a href="${escapeHtml(testcase.link)}"><code>${escapeHtml(result.testcase_id)}</code></a>`
-      : `<code>${escapeHtml(result.testcase_id)}</code>`;
+      ? `<a href="${escapeHtml(testcase.link)}"><code>${escapeHtml(testcase.testcase_id)}</code></a>`
+      : `<code>${escapeHtml(testcase.testcase_id)}</code>`;
+    const processorCells = processors.map(processor => {
+      const result = resultMap.get(`${testcase.testcase_id}::${processor.processor_id}`);
+      const tdClass = result ? 'result-td' : 'result-td result-td-empty';
+      return `<td class="${tdClass}">${resultCell(result)}</td>`;
+    }).join('');
 
     return `<tr>
       <td>${testcaseLabel}</td>
-      <td>${escapeHtml(testcase.module)}</td>
-      <td>${escapeHtml(testcase.title)}</td>
-      <td>${escapeHtml(processor?.name ?? result.processor_id)}</td>
-      <td>${statusCell(result.status)}</td>
-      <td>${escapeHtml(result.notes || '')}</td>
+      ${processorCells}
     </tr>`;
   }).join('');
 
-  return `<table><thead><tr><th>Test case</th><th>Module</th><th>Title</th><th>Processor</th><th>Status</th><th>Notes</th></tr></thead><tbody>${rows}</tbody></table>`;
+  if (!rows) {
+    return '<p class="small">No matching results for this module.</p>';
+  }
+
+  return `<table><thead><tr><th>Test case</th>${headerCells}</tr></thead><tbody>${rows}</tbody></table>`;
 }
 
-function populateSelect(id, values, labelMap = null) {
-  const element = document.getElementById(id);
-  values.forEach(value => {
-    const option = document.createElement('option');
-    option.value = value;
-    option.textContent = labelMap && labelMap[value] ? labelMap[value] : value;
-    element.appendChild(option);
+function renderResultsTables(testcases, processors, results) {
+  const moduleNames = [...new Set(testcases.map(testcase => testcase.module))];
+
+  document.querySelectorAll('[data-module-results]').forEach(container => {
+    const moduleName = container.getAttribute('data-module-results');
+    const section = container.closest('section');
+
+    if (section) {
+      section.hidden = !moduleNames.includes(moduleName);
+    }
+
+    container.innerHTML = moduleNames.includes(moduleName)
+      ? buildResultsTable(moduleName, testcases, processors, results)
+      : '';
+  });
+
+  wireResultNotes();
+}
+
+function wireResultNotes() {
+  if (document.body.dataset.resultNotesBound === 'true') return;
+  document.body.dataset.resultNotesBound = 'true';
+
+  document.addEventListener('click', event => {
+    const trigger = event.target.closest('[data-note-trigger]');
+
+    document.querySelectorAll('.result-td.note-open').forEach(cell => {
+      if (trigger && cell.contains(trigger)) return;
+      cell.classList.remove('note-open');
+      const popover = cell.querySelector('.result-popover');
+      if (popover) popover.hidden = true;
+    });
+
+    if (!trigger) return;
+
+    event.preventDefault();
+    const cell = trigger.closest('.result-td');
+    const popover = cell?.querySelector('.result-popover');
+    if (!cell || !popover) return;
+
+    const isOpen = cell.classList.contains('note-open');
+    cell.classList.toggle('note-open', !isOpen);
+    popover.hidden = isOpen;
   });
 }
 
-function setNotices(messages) {
-  const element = document.getElementById('data-notices');
-  if (!element) return;
-
-  if (!messages.length) {
-    element.hidden = true;
-    element.innerHTML = '';
-    return;
-  }
-
-  const items = messages.map(message => `<li>${escapeHtml(message)}</li>`).join('');
-  element.hidden = false;
-  element.innerHTML = `<div class="notice-box"><strong>Data notices</strong><ul>${items}</ul></div>`;
-}
+function setNotices() {}
 
 function collectDataNotices(testcases, processors, results) {
   const testcaseIds = new Set();
@@ -430,31 +481,14 @@ function setError(message) {
 
   document.getElementById('processors-table').innerHTML = html;
   document.getElementById('summary-table').innerHTML = html;
-  document.getElementById('results-table').innerHTML = html;
-  setNotices([]);
-}
-
-function wireFilters(testcases, processors, results) {
-  const processorNames = Object.fromEntries(processors.map(processor => [processor.processor_id, processor.name]));
-  populateSelect('moduleFilter', [...new Set(testcases.map(testcase => testcase.module))]);
-  populateSelect('processorFilter', processors.map(processor => processor.processor_id), processorNames);
-
-  const render = () => {
-    const filters = {
-      module: document.getElementById('moduleFilter').value,
-      processor: document.getElementById('processorFilter').value,
-      status: document.getElementById('statusFilter').value,
-      search: document.getElementById('searchFilter').value.trim()
-    };
-    document.getElementById('results-table').innerHTML = buildResultsTable(testcases, processors, results, filters);
-  };
-
-  ['moduleFilter', 'processorFilter', 'statusFilter', 'searchFilter'].forEach(id => {
-    document.getElementById(id).addEventListener('input', render);
-    document.getElementById(id).addEventListener('change', render);
+  document.querySelectorAll('[data-module-results]').forEach(container => {
+    container.innerHTML = html;
+    const section = container.closest('section');
+    if (section) {
+      section.hidden = false;
+    }
   });
-
-  render();
+  setNotices();
 }
 
 async function init() {
@@ -470,7 +504,7 @@ async function init() {
     document.getElementById('processors-table').innerHTML = buildProcessorTable(processors);
     document.getElementById('summary-table').innerHTML = buildSummaryTable(processors, testcases, results);
     setNotices(notices);
-    wireFilters(testcases, processors, results);
+    renderResultsTables(testcases, processors, results);
   } catch (error) {
     console.error(error);
     setError(error.message || 'Unknown error');
