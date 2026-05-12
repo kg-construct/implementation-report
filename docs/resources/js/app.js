@@ -106,19 +106,16 @@ function normalizeSpecificationSlug(value) {
     fnml: 'fnml',
     cc: 'cc',
     lv: 'lv',
-    star: 'star',
     'rml-core': 'core',
     'rml-io': 'io',
     'rml-fnml': 'fnml',
     'rml-cc': 'cc',
     'rml-lv': 'lv',
-    'rml-star': 'star',
     'http://w3id.org/rml/core': 'core',
     'http://w3id.org/rml/io': 'io',
     'http://w3id.org/rml/fnml': 'fnml',
     'http://w3id.org/rml/cc': 'cc',
-    'http://w3id.org/rml/lv': 'lv',
-    'http://w3id.org/rml/star': 'star'
+    'http://w3id.org/rml/lv': 'lv'
   };
   return known[normalized] || normalized;
 }
