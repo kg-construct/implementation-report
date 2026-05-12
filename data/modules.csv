@@ -4,4 +4,3 @@ RML-IO,RML-IO,io,https://raw.githubusercontent.com/kg-construct/rml-io/refs/head
 RML-FNML,RML-FNML,fnml,https://raw.githubusercontent.com/kg-construct/rml-fnml/refs/heads/main/test-cases/metadata.csv
 RML-CC,RML-CC,cc,https://raw.githubusercontent.com/kg-construct/rml-cc/refs/heads/main/test-cases/metadata.csv
 RML-LV,RML-LV,lv,https://raw.githubusercontent.com/kg-construct/rml-lv/refs/heads/main/test-cases/metadata.csv
-RML-star,RML-star,star,https://raw.githubusercontent.com/kg-construct/rml-star/refs/heads/main/test-cases/metadata.csv

@@ -1,0 +1,245 @@
+testcase_id,status,notes
+RMLTC0000-JSON,passed,
+RMLTC0001a-JSON,passed,
+RMLTC0001b-JSON,passed,
+RMLTC0002a-JSON,passed,
+RMLTC0002b-JSON,passed,
+RMLTC0002e-JSON,passed,
+RMLTC0002g-JSON,passed,
+RMLTC0003c-JSON,passed,
+RMLTC0004a-JSON,passed,
+RMLTC0004b-JSON,passed,
+RMLTC0005a-JSON,passed,
+RMLTC0006a-JSON,passed,
+RMLTC0007a-JSON,passed,
+RMLTC0007b-JSON,passed,
+RMLTC0007c-JSON,passed,
+RMLTC0007d-JSON,passed,
+RMLTC0007e-JSON,passed,
+RMLTC0007f-JSON,passed,
+RMLTC0007g-JSON,passed,
+RMLTC0007h-JSON,passed,
+RMLTC0008a-JSON,passed,
+RMLTC0008b-JSON,passed,
+RMLTC0008c-JSON,passed,
+RMLTC0009a-JSON,passed,
+RMLTC0009b-JSON,passed,
+RMLTC0010a-JSON,passed,
+RMLTC0010b-JSON,passed,
+RMLTC0010c-JSON,passed,
+RMLTC0011b-JSON,passed,
+RMLTC0012a-JSON,passed,
+RMLTC0012b-JSON,passed,
+RMLTC0012c-JSON,passed,
+RMLTC0012d-JSON,passed,
+RMLTC0012e-JSON,passed,
+RMLTC0013a-JSON,passed,
+RMLTC0015a-JSON,passed,
+RMLTC0015b-JSON,passed,
+RMLTC0019a-JSON,passed,
+RMLTC0019b-JSON,passed,
+RMLTC0020a-JSON,passed,
+RMLTC0021a-JSON,passed,
+RMLTC0022a-JSON,passed,
+RMLTC0022b-JSON,passed,
+RMLTC0022c-JSON,passed,
+RMLTC0022d-JSON,passed,
+RMLTC0022e-JSON,passed,
+RMLTC0023a-JSON,passed,
+RMLTC0023b-JSON,passed,
+RMLTC0023c-JSON,passed,
+RMLTC0023d-JSON,passed,
+RMLTC0023e-JSON,passed,
+RMLTC0023f-JSON,passed,
+RMLTC0024a-JSON,passed,
+RMLTC0025a-JSON,passed,
+RMLTC0025b-JSON,passed,
+RMLTC0025c-JSON,passed,
+RMLTC0026a-JSON,passed,
+RMLTC0026b-JSON,passed,
+RMLTC0026c-JSON,passed,
+RMLTC0026d-JSON,passed,
+RMLTC0027a-JSON,passed,
+RMLTC0027b-JSON,failed,Jen RDF library does not support generation of unsafe IRI with spaces
+RMLTC0027c-JSON,failed,No differentiations between IRI and URI encoding
+RMLTC0028a-JSON,passed,
+RMLTC0028b-JSON,passed,
+RMLTC0028c-JSON,passed,
+RMLTC0029a-JSON,passed,
+RMLTC0030a-JSON,passed,
+RMLTC0030b-JSON,passed,
+RMLTC0030c-JSON,failed,Constant valued joining is not supported yet
+RMLTC0030d-JSON,failed,Constant valued joining is not supported yet
+RMLTC0030e-JSON,failed,Constant valued joining is not supported yet
+RMLTC0030f-JSON,failed,Constant valued joining is not supported yet
+RMLTC0031a-JSON,passed,
+RMLTC0031b-JSON,passed,
+RMLTC0031c-JSON,passed,
+RMLSTC0001a,passed,
+RMLSTC0001b,passed,
+RMLSTC0002a,passed,
+RMLSTC0002b,failed,Sources with compressions not supported yet
+RMLSTC0002c,failed,Sources with compressions not supported yet
+RMLSTC0002d,failed,Sources with compressions not supported yet
+RMLSTC0002e,failed,Sources with compressions not supported yet
+RMLSTC0003,failed,SPARQL query source not supported
+RMLSTC0004a,passed,
+RMLSTC0004b,passed,
+RMLSTC0004c,passed,
+RMLSTC0006a,failed,SQL database not supported
+RMLSTC0006b,passed,
+RMLSTC0007a,passed,
+RMLSTC0007b,passed,
+RMLSTC0007c,passed,
+RMLSTC0007d,passed,
+RMLSTC0008a,passed,
+RMLSTC0008b,passed,
+RMLSTC0009a,passed,
+RMLSTC0010a,failed,Null values are assigned to extra cells if a row record has values < number of headers
+RMLSTC0010b,failed,Null values are assigned to extra cells if a row record has values < number of headers
+RMLSTC0011a,passed,
+RMLSTC0011b,passed,
+RMLSTC0011c,passed,
+RMLSTC0011d,passed,
+RMLSTC0011e,passed,
+RMLSTC0012a,passed,
+RMLSTC0012b,failed,Complex XPath queries not supported
+RMLSTC0012c,failed,Complex XPath queries not supported
+RMLSTC0012d,failed,Complex XPath queries not supported
+RMLSTC0012e,passed,
+RMLTTC0000,failed,Logical Targets not supported yet
+RMLTTC0001a,failed,Logical Targets not supported yet
+RMLTTC0001b,failed,Logical Targets not supported yet
+RMLTTC0001c,failed,Logical Targets not supported yet
+RMLTTC0001d,failed,Logical Targets not supported yet
+RMLTTC0001e,failed,Logical Targets not supported yet
+RMLTTC0001f,failed,Logical Targets not supported yet
+RMLTTC0002a,failed,Logical Targets not supported yet
+RMLTTC0002b,failed,Logical Targets not supported yet
+RMLTTC0002c,failed,Logical Targets not supported yet
+RMLTTC0002d,failed,Logical Targets not supported yet
+RMLTTC0002e,failed,Logical Targets not supported yet
+RMLTTC0002f,failed,Logical Targets not supported yet
+RMLTTC0002g,failed,Logical Targets not supported yet
+RMLTTC0002h,failed,Logical Targets not supported yet
+RMLTTC0002i,failed,Logical Targets not supported yet
+RMLTTC0002j,failed,Logical Targets not supported yet
+RMLTTC0002k,failed,Logical Targets not supported yet
+RMLTTC0002l,failed,Logical Targets not supported yet
+RMLTTC0002m,failed,Logical Targets not supported yet
+RMLTTC0002n,failed,Logical Targets not supported yet
+RMLTTC0002o,failed,Logical Targets not supported yet
+RMLTTC0002p,failed,Logical Targets not supported yet
+RMLTTC0002q,failed,Logical Targets not supported yet
+RMLTTC0002r,failed,Logical Targets not supported yet
+RMLTTC0003a,failed,Logical Targets not supported yet
+RMLTTC0004a,failed,Logical Targets not supported yet
+RMLTTC0004b,failed,Logical Targets not supported yet
+RMLTTC0004c,failed,Logical Targets not supported yet
+RMLTTC0004d,failed,Logical Targets not supported yet
+RMLTTC0004e,failed,Logical Targets not supported yet
+RMLTTC0004f,failed,Logical Targets not supported yet
+RMLTTC0004g,failed,Logical Targets not supported yet
+RMLTTC0005a,failed,Logical Targets not supported yet
+RMLTTC0005b,failed,Logical Targets not supported yet
+RMLTTC0006a,failed,Logical Targets not supported yet
+RMLTTC0006b,failed,Logical Targets not supported yet
+RMLTTC0006c,failed,Logical Targets not supported yet
+RMLTTC0006d,failed,Logical Targets not supported yet
+RMLTTC0006e,failed,Logical Targets not supported yet
+RMLTTC0007a,failed,Logical Targets not supported yet
+RMLTC-CC-0001-Alt,inapplicable,CC not supported
+RMLTC-CC-0001-Bag,inapplicable,CC not supported
+RMLTC-CC-0001-List,inapplicable,CC not supported
+RMLTC-CC-0001-Seq,inapplicable,CC not supported
+RMLTC-CC-0002-Bag,inapplicable,CC not supported
+RMLTC-CC-0002-List,inapplicable,CC not supported
+RMLTC-CC-0003-EB,inapplicable,CC not supported
+RMLTC-CC-0003-EL,inapplicable,CC not supported
+RMLTC-CC-0003-EL-BN,inapplicable,CC not supported
+RMLTC-CC-0003-EL-Named,inapplicable,CC not supported
+RMLTC-CC-0003-NEB,inapplicable,CC not supported
+RMLTC-CC-0003-NEL,inapplicable,CC not supported
+RMLTC-CC-0003-NELb,inapplicable,CC not supported
+RMLTC-CC-0004-SM1,inapplicable,CC not supported
+RMLTC-CC-0004-SM2,inapplicable,CC not supported
+RMLTC-CC-0004-SM3,inapplicable,CC not supported
+RMLTC-CC-0004-SM4,inapplicable,CC not supported
+RMLTC-CC-0004-SM5,inapplicable,CC not supported
+RMLTC-CC-0005-App1,inapplicable,CC not supported
+RMLTC-CC-0005-App2,inapplicable,CC not supported
+RMLTC-CC-0005-Car1,inapplicable,CC not supported
+RMLTC-CC-0005-Car2,inapplicable,CC not supported
+RMLTC-CC-0006-IT0,inapplicable,CC not supported
+RMLTC-CC-0006-IT1,inapplicable,CC not supported
+RMLTC-CC-0006-IT2,inapplicable,CC not supported
+RMLTC-CC-0006-IT3,inapplicable,CC not supported
+RMLTC-CC-0006-IT4,inapplicable,CC not supported
+RMLTC-CC-0006-IT5,inapplicable,CC not supported
+RMLTC-CC-0007-NES,inapplicable,CC not supported
+RMLTC-CC-0008-ROMa,inapplicable,CC not supported
+RMLTC-CC-0008-ROMb,inapplicable,CC not supported
+RMLTC-CC-0009-DUP-Bag,inapplicable,CC not supported
+RMLTC-CC-0009-DUP-List,inapplicable,CC not supported
+RMLTC-CC-0010-Lista,inapplicable,CC not supported
+RMLTC-CC-0010-Listb,inapplicable,CC not supported
+RMLFNMLTC0002-CSV,passed,
+RMLFNMLTC0003-CSV,passed,
+RMLFNMLTC0004-CSV,passed,
+RMLFNMLTC0005-CSV,passed,
+RMLFNMLTC0007-CSV,passed,
+RMLFNMLTC0008-CSV,failed,Exception is thrown since the java implementation of grel:string_substring function throws an error
+RMLFNMLTC0011-CSV,failed,Implemented toUppercaseURL idlab function returns uppercased HTTP instead of a lowercased http
+RMLFNMLTC0021-CSV,passed,
+RMLFNMLTC0031-CSV,failed,Implemented toUppercaseURL idlab function returns uppercased HTTP instead of a lowercased http
+RMLFNMLTC0032-CSV,failed,rml:condition not supported yet
+RMLFNMLTC0041-CSV,passed,
+RMLFNMLTC0051-CSV,passed,
+RMLFNMLTC0061-CSV,passed,
+RMLFNMLTC0071-CSV,passed,
+RMLFNMLTC0081-CSV,passed,
+RMLFNMLTC0101-CSV,passed,
+RMLFNMLTC0102-CSV,passed,
+RMLFNMLTC0103-CSV,passed,
+RMLFNMLTC0104-CSV,passed,
+RMLLVTC0000a,passed,
+RMLLVTC0000b,passed,
+RMLLVTC0000c,passed,
+RMLLVTC0001a,passed,
+RMLLVTC0001b,passed,
+RMLLVTC0001c,failed,Logical view templating not supported yet
+RMLLVTC0001d,passed,
+RMLLVTC0002a,passed,
+RMLLVTC0002b,passed,
+RMLLVTC0002c,passed,
+RMLLVTC0003a,passed,
+RMLLVTC0003b,passed,
+RMLLVTC0003c,passed,
+RMLLVTC0004a,passed,
+RMLLVTC0004b,passed,
+RMLLVTC0004c,passed,
+RMLLVTC0004d,passed,
+RMLLVTC0005a,passed,
+RMLLVTC0005b,passed,
+RMLLVTC0005c,passed,
+RMLLVTC0006a,failed,Logical view joins not supported
+RMLLVTC0006b,failed,Logical view joins not supported
+RMLLVTC0006c,failed,Logical view joins not supported
+RMLLVTC0006d,failed,Logical view joins not supported
+RMLLVTC0006e,failed,Logical view joins not supported
+RMLLVTC0006f,failed,Logical view joins not supported
+RMLLVTC0007a,failed,Logical view joins not supported
+RMLLVTC0007b,failed,Logical view joins not supported
+RMLLVTC0007c,failed,Logical view joins not supported
+RMLLVTC0008a,passed,
+RMLLVTC0008b,passed,
+RMLLVTC0008c,passed,
+RMLLVTC0008d,passed,
+RMLLVTC0009a,passed,
+RMLLVTC0009b,failed,Logical view joins not supported
+RMLLVTC0009c,passed,
+RMLLVTC0010a,passed,
+RMLLVTC0010b,passed,
+RMLLVTC0010c,passed,
+RMLLVTC0010d,passed,
+RMLLVTC0010e,passed,
