@@ -14,7 +14,7 @@ permissions:
 jobs:
   export-docs:
     if: github.actor != 'github-actions[bot]'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       TZ: Europe/Madrid
     steps:
