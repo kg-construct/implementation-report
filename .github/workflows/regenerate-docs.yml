@@ -1,0 +1,57 @@
+name: Regenerate docs
+
+on:
+  push:
+    paths:
+      - 'data/*.csv'
+      - 'data/**/*.csv'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  export-docs:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Madrid
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Compute export date
+        id: export-date
+        run: echo "value=$(date +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: Export docs
+        env:
+          EXPORT_DATE: ${{ steps.export-date.outputs.value }}
+        run: node scripts/export-docs.mjs
+
+      - name: Create pull request with generated docs
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore: regenerate docs from data update"
+          branch: "automation/regenerate-docs"
+          delete-branch: true
+          title: "chore: regenerate docs from data update"
+          body: |
+            This PR was created automatically after CSV changes in `data/`.
+
+            It regenerates:
+            - `docs/index.html`
+            - `docs/resources/*`
+            - `docs/<YYYY-MM-DD>/*`
+
+            Please review the generated output before merging.
+          add-paths: |
+            docs

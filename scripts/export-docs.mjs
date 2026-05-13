@@ -1,6 +1,8 @@
 import { spawn } from 'node:child_process';
 import {
+  cpSync,
   copyFileSync,
+  existsSync,
   mkdirSync,
   readFileSync,
   rmSync,
@@ -15,6 +17,19 @@ const projectRoot = path.resolve(__dirname, '..');
 const docsDir = path.join(projectRoot, 'docs');
 const resourcesDir = path.join(docsDir, 'resources');
 const VALID_STATUSES = new Set(['passed', 'failed', 'inapplicable']);
+
+function exportDateString() {
+  const fromEnv = process.env.EXPORT_DATE?.trim();
+  if (fromEnv) return fromEnv;
+
+  const formatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone: process.env.TZ || 'UTC',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+  return formatter.format(new Date());
+}
 
 function csvTextToObjects(text) {
   const cleaned = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
@@ -220,12 +235,16 @@ function injectSnapshot(html, snapshot) {
 
 async function main() {
   const snapshot = await loadSnapshot();
+  const exportDate = exportDateString();
+  const datedDir = path.join(docsDir, exportDate);
 
   rmSync(path.join(resourcesDir, 'css'), { recursive: true, force: true });
   rmSync(path.join(resourcesDir, 'js'), { recursive: true, force: true });
   rmSync(path.join(docsDir, 'data'), { recursive: true, force: true });
+  rmSync(datedDir, { recursive: true, force: true });
   mkdirSync(path.join(resourcesDir, 'css'), { recursive: true });
   mkdirSync(path.join(resourcesDir, 'js'), { recursive: true });
+  mkdirSync(datedDir, { recursive: true });
 
   await runCommand('npx', ['--yes', 'respec', '--src', 'dev.html', '--out', 'docs/index.html', '--timeout', '60']);
 
@@ -235,8 +254,12 @@ async function main() {
   writeFileSync(path.join(docsDir, 'index.html'), finalHtml);
   copyFileSync(path.join(projectRoot, 'css', 'style.css'), path.join(resourcesDir, 'css', 'style.css'));
   copyFileSync(path.join(projectRoot, 'js', 'app.js'), path.join(resourcesDir, 'js', 'app.js'));
+  copyFileSync(path.join(docsDir, 'index.html'), path.join(datedDir, 'index.html'));
+  if (existsSync(resourcesDir)) {
+    cpSync(resourcesDir, path.join(datedDir, 'resources'), { recursive: true });
+  }
 
-  process.stdout.write('Exported docs/index.html from dev.html using ReSpec and embedded report data.\n');
+  process.stdout.write(`Exported docs/index.html and docs/${exportDate}/index.html from dev.html using ReSpec and embedded report data.\n`);
 }
 
 main().catch(error => {
