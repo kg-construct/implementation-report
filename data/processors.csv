@@ -1,5 +1,5 @@
 processor_id,name,version,release_date,contact,homepage,results_file
-burp,BURP,0.1.6,2026-05-10,Christophe Debruyne,https://github.com/kg-construct/BURP,"results/burp.csv"
+burp-error,BURP-Error,0.1.6,2026-05-05,Jakub Duchateau,https://github.com/jduchateau/BURP-Errors,"results/burp-error.csv"
 carml,CARML,,2026-05-10,Pano Maria,https://github.com/carml/carml,"results/carml.csv"
 mapping-weaver,MappingWeaver-java,,2026-05-10,Sitt Min Oo,https://github.com/RMLio/MappingWeaver-java,"results/mapping-weaver.csv"
 sdm-rdfizer,SDM-RDFizer,4.7.5.14,2026-05-10,Enrique Iglesias,https://github.com/SDM-TIB/SDM-RDFizer,"results/sdm-rdfizer.csv"
