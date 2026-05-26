@@ -1,49 +1,99 @@
 # RML Implementation Report
 
-Static implementation report for GitHub Pages using ReSpec and CSV files.
+This repository generates the RML implementation report published as static HTML.
 
-## Structure
+If you want to add your engine results, the expected workflow is:
 
-- `dev.html`: ReSpec source document
-- `css/style.css`: visual tweaks
-- `js/app.js`: loads module inventories and engine CSV files, or uses embedded snapshot data in `docs/index.html`
-- `scripts/export-docs.mjs`: exports `docs/index.html` from `dev.html` via ReSpec CLI and embeds a data snapshot
-- `data/modules.csv`: list of RML modules and the CSV to fetch test cases from
-- `data/processors.csv`: implementations metadata
-- `data/testcases/*.csv`: example module test-case inventories using the upstream format
-- `data/results/*.csv`: one result file per engine
+1. Fork this repository.
+2. Edit the data files for your engine.
+3. Regenerate the report.
+4. Open a pull request with your changes.
 
-## CSV formats
+## What you need to edit
 
-### modules.csv
-`module_id,module_name,specification_slug,testcases_csv`
+Most contributors only need to touch these files:
 
-Each row points to a CSV with the module test cases. By default this project points directly to the raw files in the `kg-construct` GitHub repositories. The app expects the CSV to include at least:
+- `data/processors.csv`: add one row for your engine metadata
+- `data/results/<your-engine>.csv`: add your per-test results
 
-`ID,title,description,specification,...,error`
+## Step by step
 
-You can keep these CSVs local for testing, but the default setup uses the raw GitHub URLs directly.
+### 1. Fork and clone
 
-### processors.csv
+Fork the repository on GitHub, then clone your fork locally.
+
+### 2. Add your engine metadata
+
+In `data/processors.csv`, add one line for your implementation:
+
 `processor_id,name,version,release_date,contact,homepage,results_file`
 
-`results_file` is optional. If omitted, the app looks for `data/results/<processor_id>.csv`.
+Example:
 
-### data/results/<engine>.csv
+```csv
+my-engine,My Engine,1.0.0,2026-05-26,team@example.org,https://example.org/my-engine,results/my-engine.csv
+```
+
+Notes:
+
+- `processor_id` should be stable and unique
+- `results_file` should usually point to `results/<processor_id>.csv`
+- `release_date` should use `YYYY-MM-DD`
+
+### 3. Add your test results
+
+Create a file in `data/results/` for your engine, for example `data/results/my-engine.csv`.
+
+Format:
+
 `testcase_id,status,notes`
 
-You can also keep a `processor_id` column in each result file; when it is missing, the app fills it from the engine declared in `processors.csv`.
+Example:
 
-Allowed `status` values:
+```csv
+testcase_id,status,notes
+RMLTC0000-JSON,passed,
+RMLTC0002g-JSON,failed,Invalid JSONPath is not handled yet
+RMLLVTC0005a,inapplicable,Feature not implemented in this release
+```
+
+Allowed values for `status`:
+
 - `passed`
 - `failed`
 - `inapplicable`
 
-## Publish on GitHub Pages
+About `notes`:
 
-1. Run `node scripts/export-docs.mjs`.
-2. Commit the generated `docs/` output.
-3. Enable GitHub Pages from `docs/`.
-4. Open the published URL.
+- leave it empty when there is nothing to explain
+- use it to describe a limitation, known issue, or reason for failure/inapplicability
+- the generated report shows this text from the result cell
 
-The export script uses ReSpec's own HTML export through `npx respec`, then embeds the resolved data snapshot into `docs/index.html` so the published page does not fetch CSV files at runtime.
+## Where the test cases come from
+
+The report reads the official test-case metadata from the module repositories listed in `data/modules.csv`.
+
+## Regenerate the report locally
+
+After editing your CSV files, if you want to see the results locally, please execute:
+
+```bash
+node scripts/export-docs.mjs
+```
+
+This updates:
+
+- `docs/index.html`
+- `docs/resources/`
+- `docs/<YYYY-MM-DD>/`
+
+The export uses ReSpec and embeds the resolved data snapshot into the generated HTML, so the published page does not need to fetch CSV files at runtime.
+
+## Submit your contribution
+
+Once the generated output looks correct:
+
+1. Commit only your CSV changes 
+2. Push to your fork
+3. Open a pull request
+
