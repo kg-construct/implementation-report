@@ -233,33 +233,49 @@ function injectSnapshot(html, snapshot) {
     );
 }
 
+function createRespecSource(exportDate) {
+  const sourcePath = path.join(projectRoot, 'dev.html');
+  const tempPath = path.join(projectRoot, '.tmp-dev-export.html');
+  const source = readFileSync(sourcePath, 'utf8');
+  const updated = source.replace(
+    /publishDate:\s*"[^"]+"/,
+    `publishDate: "${exportDate}"`
+  );
+  writeFileSync(tempPath, updated);
+  return tempPath;
+}
+
 async function main() {
   const snapshot = await loadSnapshot();
   const exportDate = exportDateString();
   const datedDir = path.join(docsDir, exportDate);
+  const tempRespecSource = createRespecSource(exportDate);
+  try {
+    rmSync(path.join(resourcesDir, 'css'), { recursive: true, force: true });
+    rmSync(path.join(resourcesDir, 'js'), { recursive: true, force: true });
+    rmSync(path.join(docsDir, 'data'), { recursive: true, force: true });
+    rmSync(datedDir, { recursive: true, force: true });
+    mkdirSync(path.join(resourcesDir, 'css'), { recursive: true });
+    mkdirSync(path.join(resourcesDir, 'js'), { recursive: true });
+    mkdirSync(datedDir, { recursive: true });
 
-  rmSync(path.join(resourcesDir, 'css'), { recursive: true, force: true });
-  rmSync(path.join(resourcesDir, 'js'), { recursive: true, force: true });
-  rmSync(path.join(docsDir, 'data'), { recursive: true, force: true });
-  rmSync(datedDir, { recursive: true, force: true });
-  mkdirSync(path.join(resourcesDir, 'css'), { recursive: true });
-  mkdirSync(path.join(resourcesDir, 'js'), { recursive: true });
-  mkdirSync(datedDir, { recursive: true });
+    await runCommand('npx', ['--yes', 'respec', '--src', tempRespecSource, '--out', 'docs/index.html', '--timeout', '60']);
 
-  await runCommand('npx', ['--yes', 'respec', '--src', 'dev.html', '--out', 'docs/index.html', '--timeout', '60']);
+    const exportedHtml = readFileSync(path.join(docsDir, 'index.html'), 'utf8');
+    const finalHtml = injectSnapshot(exportedHtml, snapshot);
 
-  const exportedHtml = readFileSync(path.join(docsDir, 'index.html'), 'utf8');
-  const finalHtml = injectSnapshot(exportedHtml, snapshot);
+    writeFileSync(path.join(docsDir, 'index.html'), finalHtml);
+    copyFileSync(path.join(projectRoot, 'css', 'style.css'), path.join(resourcesDir, 'css', 'style.css'));
+    copyFileSync(path.join(projectRoot, 'js', 'app.js'), path.join(resourcesDir, 'js', 'app.js'));
+    copyFileSync(path.join(docsDir, 'index.html'), path.join(datedDir, 'index.html'));
+    if (existsSync(resourcesDir)) {
+      cpSync(resourcesDir, path.join(datedDir, 'resources'), { recursive: true });
+    }
 
-  writeFileSync(path.join(docsDir, 'index.html'), finalHtml);
-  copyFileSync(path.join(projectRoot, 'css', 'style.css'), path.join(resourcesDir, 'css', 'style.css'));
-  copyFileSync(path.join(projectRoot, 'js', 'app.js'), path.join(resourcesDir, 'js', 'app.js'));
-  copyFileSync(path.join(docsDir, 'index.html'), path.join(datedDir, 'index.html'));
-  if (existsSync(resourcesDir)) {
-    cpSync(resourcesDir, path.join(datedDir, 'resources'), { recursive: true });
+    process.stdout.write(`Exported docs/index.html and docs/${exportDate}/index.html from dev.html using ReSpec and embedded report data.\n`);
+  } finally {
+    rmSync(tempRespecSource, { force: true });
   }
-
-  process.stdout.write(`Exported docs/index.html and docs/${exportDate}/index.html from dev.html using ReSpec and embedded report data.\n`);
 }
 
 main().catch(error => {
