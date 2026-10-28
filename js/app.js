@@ -120,11 +120,11 @@ function formatEngineHeader(name) {
 }
 
 function resultCell(result) {
-  if (!result) return '<span class="result-cell is-empty">-</span>';
+  if (!result) return '<span class="result-cell is-empty" aria-label="No result reported">–</span>';
 
   const note = (result.notes || '').trim();
   const noteButton = note
-    ? `<button type="button" class="result-note" data-note-trigger aria-label="Show note">+</button><span class="result-popover" hidden>${escapeHtml(note)}</span>`
+    ? `<button type="button" class="result-note" data-note-trigger aria-expanded="false" aria-label="Show note">+</button><span class="result-popover" hidden>${escapeHtml(note)}</span>`
     : '';
   return `<span class="result-cell">${statusCell(result.status)}${noteButton}</span>`;
 }
@@ -154,7 +154,6 @@ function normalizeSpecificationSlug(value) {
 function titleCaseSpecification(specification) {
   const slug = normalizeSpecificationSlug(specification);
   if (!slug) return 'Unknown';
-  if (slug === 'star') return 'RML-star';
   return `RML-${slug.toUpperCase()}`;
 }
 
@@ -273,6 +272,10 @@ async function loadLiveData() {
   };
 }
 
+function scrollableTable(table, label) {
+  return `<div class="table-scroll" role="region" aria-label="${escapeHtml(label)}" tabindex="0">${table}</div>`;
+}
+
 function buildProcessorTable(processors) {
   const rows = processors.map(processor => `
       <tr>
@@ -283,7 +286,7 @@ function buildProcessorTable(processors) {
         <td>${linkCell(processor.homepage)}</td>
       </tr>`).join('');
 
-  return `<table><thead><tr><th>Name</th><th>Version</th><th>Test date</th><th>Contact</th><th>Web page</th></tr></thead><tbody>${rows}</tbody></table>`;
+  return scrollableTable(`<table><thead><tr><th>Name</th><th>Version</th><th>Test date</th><th>Contact</th><th>Web page</th></tr></thead><tbody>${rows}</tbody></table>`, 'Processors');
 }
 
 function summarizeEngineByModule(processorId, processors, testcases, results) {
@@ -348,7 +351,7 @@ function buildSummaryTable(processors, testcases, results) {
     return '<p class="small">No engines found in <code>data/processors.csv</code>.</p>';
   }
 
-  return `<table class="summary-table"><thead><tr><th>Engine</th><th class="summary-metric">Reported</th><th class="summary-metric">Passed</th><th class="summary-metric">Failed</th><th class="summary-metric">Inappl.</th>${header}</tr></thead><tbody>${rows}</tbody></table>`;
+  return scrollableTable(`<table class="summary-table"><thead><tr><th>Engine</th><th class="summary-metric">Reported</th><th class="summary-metric">Passed</th><th class="summary-metric">Failed</th><th class="summary-metric">Inappl.</th>${header}</tr></thead><tbody>${rows}</tbody></table>`, 'Coverage summary');
 }
 
 function buildResultsTable(moduleName, testcases, processors, results) {
@@ -383,7 +386,7 @@ function buildResultsTable(moduleName, testcases, processors, results) {
     return '<p class="small">No matching results for this module.</p>';
   }
 
-  return `<table><thead><tr><th>Test case</th>${headerCells}</tr></thead><tbody>${rows}</tbody></table>`;
+  return scrollableTable(`<table><thead><tr><th>Test case</th>${headerCells}</tr></thead><tbody>${rows}</tbody></table>`, `${moduleName} results`);
 }
 
 function renderResultsTables(testcases, processors, results) {
@@ -409,6 +412,17 @@ function wireResultNotes() {
   if (document.body.dataset.resultNotesBound === 'true') return;
   document.body.dataset.resultNotesBound = 'true';
 
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    document.querySelectorAll('.result-td.note-open').forEach(cell => {
+      cell.classList.remove('note-open');
+      cell.querySelector('.result-popover').hidden = true;
+      const trigger = cell.querySelector('[data-note-trigger]');
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.focus();
+    });
+  });
+
   document.addEventListener('click', event => {
     const trigger = event.target.closest('[data-note-trigger]');
 
@@ -417,6 +431,7 @@ function wireResultNotes() {
       cell.classList.remove('note-open');
       const popover = cell.querySelector('.result-popover');
       if (popover) popover.hidden = true;
+      cell.querySelector('[data-note-trigger]')?.setAttribute('aria-expanded', 'false');
     });
 
     if (!trigger) return;
@@ -429,6 +444,7 @@ function wireResultNotes() {
     const isOpen = cell.classList.contains('note-open');
     cell.classList.toggle('note-open', !isOpen);
     popover.hidden = isOpen;
+    trigger.setAttribute('aria-expanded', String(!isOpen));
   });
 }
 
